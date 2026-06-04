@@ -1,0 +1,11 @@
+<script>
+	import favicon from '$lib/assets/favicon.ico';
+	let {children} = $props();
+	import "../app.css";
+</script>
+
+<svelte:head>
+	<link rel = "icon" href = {"favicon"}/>
+</svelte:head>
+
+{@render children()}
