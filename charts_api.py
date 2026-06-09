@@ -1,6 +1,8 @@
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from fastapi.responses import Response
 import sqlite3 as sql
+import json
 
 
 app = FastAPI()
@@ -9,33 +11,75 @@ app.add_middleware(CORSMiddleware, allow_origins = ['*'], allow_credentials = Tr
 
 @app.get('/charts')
 def get_charts():
-    db = sql.connect('charts.db')
-    db.row_factory = sql.Row
-    cursor = db.cursor()
+    charts_db = sql.connect('charts.db')
+    charts_db.row_factory = sql.Row
+    cursor = charts_db.cursor()
     cursor.execute('SELECT id, title, difficulty, constant, score FROM charts ORDER BY score')
     rows = cursor.fetchall()
-    db.close()
+    charts_db.close()
 
     return [dict(row) for row in rows]
 
 @app.get('/b30')
 def get_b30():
-    db = sql.connect('charts.db')
-    db.row_factory = sql.Row
-    cursor = db.cursor()
+    charts_db = sql.connect('charts.db')
+    charts_db.row_factory = sql.Row
+    cursor = charts_db.cursor()
     cursor.execute('SELECT id, title, difficulty, constant, score FROM charts ORDER BY score DESC LIMIT 30')
     rows = cursor.fetchall()
-    db.close()
+    charts_db.close()
 
     return [dict(row) for row in rows]
 
 @app.post('/update_score')
 def update_score(data: dict):
-    db = sql.connect('charts.db')
+    charts_db = sql.connect('charts.db')
 
-    db.execute(f"UPDATE charts SET score = {data['score']} WHERE id = {data['id']}")
+    charts_db.execute(f"UPDATE charts SET score = {data['score']} WHERE id = {data['id']}")
 
-    db.commit()
-    db.close()
+    charts_db.commit()
+    charts_db.close()
 
     return {"success": True}
+
+@app.post('/add_chart')
+def add_chart(title, difficulty, constant, score = 0):
+    charts_db = sql.connect('charts.db')
+
+    charts_db.execute(f"INSERT INTO charts (title, difficulty, constant, score) VALUES (\"{title}\", \"{difficulty}\", {float(constant)}, {int(score)});")
+
+    charts_db.commit()
+    charts_db.close()
+
+    return {"success": True}
+
+@app.post('/remove_chart')
+def remove_chart(title = '', id = -1):
+    if title == '' and id == -1:
+        return {"fail": False}
+    
+    charts_db = sql.connect('charts.db')
+
+    charts_db.execute(f"")
+
+    charts_db.commit()
+    charts_db.close()
+
+    return {"success": True}
+
+@app.exception_handler(404)
+async def custom_404(request: Request, exc):
+    data = {'         _____                                   _____     ':0,  
+            '        /    /                                  /    /     ':0,
+            '       /    /                                  /    /      ':0,
+            '      /    /                                  /    /       ':0,
+            '     /    /             .-\'\'` \'\'-.           /    /        ':0,
+            '    /    /  ___        .\'          \'.       /    /  ___     ':0,
+            '   /    /  |   |      /              `     /    /  |   |    ':0,
+            '  /    \'   |   |     \'                \'   /    \'   |   |    ':0,
+            ' /    \'----|   |---. |         .-.    |  /    \'----|   |---.':0,
+            '/          |   |   | .        |   |   . /          |   |   |':0,
+            '\'----------|   |---\'  .       \'._.\'  /  \'----------|   |---\'':0,
+            '           |   |       \'._         .\'              |   |    ':0,
+            '          /____\         \'-....-\'`               /____\ ':0}
+    return Response(content = json.dumps(data, indent = 4), media_type = 'application/json')    

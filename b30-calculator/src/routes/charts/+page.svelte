@@ -12,10 +12,15 @@
 	let offset = $state(0);
 	let total_pages = $state(0);
 	let page_input = $state("...");
-	let valid = $state(1);
 
-	onMount(async () => {const response = await fetch("http://127.0.0.1:8000/charts");
+	onMount(async () => {let page_num = Number(page.url.searchParams.get('page')) || 0;
+						 const response = await fetch("http://127.0.0.1:8000/charts");
 						 table_data = await response.json();
+						 total_pages = Math.floor(table_data.length/limit)+1;
+	                     if(page_num >= total_pages)
+						 {
+						     goto(`/invalid_chart_page`);
+						 }
 						 
 						 table_data = table_data.map(row => ({Id: row.id,
 														      Title: row.title,
@@ -77,22 +82,12 @@
                                  row["Play Potential"] = 0;
                              }
 						 }
-						 total_pages = Math.floor(table_data.length/limit)+1;
 						 });
 
-    $effect(() => {let page_num = Number(page.url.searchParams.get('page'));
-				   offset = page_num || 0;
+    $effect(() => {offset = Number(page.url.searchParams.get('page')) || 0;
 				   if(offset < total_pages)
 	               {
 				       shown_rows = table_data.slice(offset*limit, (offset+1)*limit);
-				   }
-				   if(page_num < total_pages && page_num >= 0)
-				   {
-				       valid = 1;
-				   }
-				   else
-				   {
-				       valid = 0;
 				   }
 				   });
 					
@@ -144,14 +139,13 @@
 {/if}
 
 
-{#if valid}
-	<div class = "top-bar">
+<div class = "top-bar">
 		<a href = "/b30" class = "tairitsu charts-button">B30 List</a>
 		<a href = "/b30" class = "tairitsu charts-button">B30 List</a>
 	</div>
 
-	{#if table_data.length > 0}
-	<div class = "nav">
+{#if table_data.length > 0}
+<div class = "nav">
 	<div class="nav-left">
 		{#each left_pages() as p}
 			<button class = {`nav-button nav-size ${Math.abs(offset-p) == 2 ? "pst" : "prs"}`}
@@ -188,8 +182,8 @@
 		{/each}
 	</div>
 </div>
-	
-	<table border = "1">
+
+<table border = "1">
 	<thead>
 		<tr>
 		{#each columns as col}
@@ -220,8 +214,8 @@
 		{/each}
 	</tbody>
 </table>
-	
-	<div class = "nav">
+
+<div class = "nav">
 	<div class="nav-left">
 		{#each left_pages() as p}
 			<button class = {`nav-button nav-size ${Math.abs(offset-p) == 2 ? "pst" : "prs"}`}
@@ -258,17 +252,4 @@
 		{/each}
 	</div>
 </div>
-	{/if}
-{:else}
-	<div class = "top-bar">
-		<a href = "/b30" class = "tairitsu charts-button">B30 List</a>
-		<a href = "/charts" class = "hikari charts-button">All Charts</a>
-	</div>
-
-	<p class = "secret">You found the hidden dancing Tairitsu!</p>
-	<div class = "media-container">
-		<video controls autoplay loop playsinline  preload="auto" width = 700>
-			<source src = "https://packaged-media.redd.it/qjjq8k6tblzg1/pb/m2-res_360p.mp4?m=DASHPlaylist.mpd&amp;var=sgpssan&amp;v=1&amp;e=1780574400&amp;s=61dfa52e5659c9a8f74dffc7ea92cce2e142a72a" type="video/mp4">
-		</video>
-	</div>
 {/if}

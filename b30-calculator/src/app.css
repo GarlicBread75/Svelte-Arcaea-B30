@@ -6,7 +6,6 @@ html, body
     margin: 0;
 	background: transparent;
 }
-
 body::before
 {
     content: "";
@@ -28,7 +27,6 @@ table
 	font-family: "docs-K2D", Arial;
 	margin: auto;
 }
-
 th
 {
 	text-align: center;
@@ -37,7 +35,6 @@ th
 	padding: 10px;
 	font-family: "docs-K2D", Arial;
 }
-
 td
 {
 	text-align: center;
@@ -182,6 +179,34 @@ input
     justify-self: center;
 }
 
+.auth-page
+{
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.auth-box
+{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 300px;
+    padding: 25px;
+    background-color: #303030;
+    align-items: center;
+}
+.auth-box input
+{
+    text-align: center;
+    padding: 8px;
+}
+.auth-box button
+{
+    padding: 10px;
+    cursor: pointer;
+}
+
 .media-container
 {
     position: fixed;
@@ -191,10 +216,22 @@ input
 }
 .secret
 {
-	font-size: 40px;
+	font-size: 50px;
     align-items: center;
     justify-content: center;
 	text-align: center;
 	font-weight: bold;
     color: #ffffff;
+    position: relative;
+    top: -5px;
+}
+.secret1
+{
+	font-size: 12px;
+    align-items: center;
+    justify-content: center;
+	text-align: center;
+    color: #ffffff;
+    position: relative;
+    top: -16px;
 }
