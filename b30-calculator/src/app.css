@@ -115,6 +115,58 @@ input
         -2px  2px 10px black,
          2px  2px 10px black;
 }
+.eto
+{
+	background-image: url("https://static.wikia.nocookie.net/iowiro/images/6/63/Eto_awakened_icon.png");
+    background-size: cover;
+    background-position: center;
+	background-repeat: no-repeat;
+	color: #ffffff;
+    text-shadow:
+        -2px -2px 10px black,
+         2px -2px 10px black,
+        -2px  2px 10px black,
+         2px  2px 10px black;
+}
+.luna
+{
+	background-image: url("https://static.wikia.nocookie.net/iowiro/images/c/cc/Luna_awakened_icon.png");
+    background-size: cover;
+    background-position: center;
+	background-repeat: no-repeat;
+	color: #000000;
+    text-shadow:
+        -2px -2px 10px white,
+         2px -2px 10px white,
+        -2px  2px 10px white,
+         2px  2px 10px white;
+}
+.doro-c
+{
+	background-image: url("https://static.wikia.nocookie.net/iowiro/images/0/04/DORO%2AC_awakened_icon.png");
+    background-size: cover;
+    background-position: center;
+	background-repeat: no-repeat;
+	color: #ffffff;
+    text-shadow:
+        -2px -2px 10px red,
+         2px -2px 10px red,
+        -2px  2px 10px red,
+         2px  2px 10px red;
+}
+.saya
+{
+    background-image: url("https://static.wikia.nocookie.net/iowiro/images/1/1b/Saya_icon.png");
+    background-size: cover;
+    background-position: center;
+	background-repeat: no-repeat;
+	color: #000000;
+    text-shadow:
+        -2px -2px 10px #b0dcc9,
+         2px -2px 10px #b0dcc9,
+        -2px  2px 10px #b0dcc9,
+         2px  2px 10px #b0dcc9;
+}
 .top-bar
 {
     position: fixed;
@@ -124,6 +176,30 @@ input
     top: 0;
     left: 0;
     right: 0;
+    pointer-events: none;
+}
+.bottom-bar
+{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    padding: 15px 20px;
+    bottom: 100px;
+    left: 0;
+    right: 0;
+    pointer-events: none;
+}
+.left-bar
+{
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 30px;
+    gap: 20px;
+    top: 100px;
+    bottom: 0;
+    left: 0;
     pointer-events: none;
 }
 
@@ -181,7 +257,7 @@ input
 
 .auth-page
 {
-    min-height: 100vh;
+    min-height: 90vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -190,21 +266,53 @@ input
 {
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    width: 300px;
-    padding: 25px;
+    gap: 20px;
+    width: 500px;
+    padding: 50px;
     background-color: #303030;
     align-items: center;
+}
+.hikari-bg
+{
+    background-image: url("https://static.wikia.nocookie.net/iowiro/images/1/11/0-3.jpg");
+    background-size: cover;
+    background-position: center;
+	background-repeat: no-repeat;
+}
+.tairitsu-bg
+{
+    background-image: url("https://static.wikia.nocookie.net/iowiro/images/8/8d/F-7cg.jpg");
+    background-size: cover;
+    background-position: center;
+	background-repeat: no-repeat;
 }
 .auth-box input
 {
     text-align: center;
-    padding: 8px;
+    padding: 10px;
 }
 .auth-box button
 {
     padding: 10px;
     cursor: pointer;
+}
+.blue-bg
+{
+    background-color: #0d6a80;
+}
+.blue-text
+{
+    color: #14a7cc;
+    background-color: #c6a3cc;
+}
+.pink-bg
+{
+    background-color: #720d80;
+}
+.pink-text
+{
+    background: #a3c3cc;
+    color: #b714cc;
 }
 
 .media-container
@@ -234,4 +342,64 @@ input
     color: #ffffff;
     position: relative;
     top: -16px;
+}
+
+.state
+{
+    color: #ffffff;
+	font-weight: bold;
+}
+.login-signup-msg
+{
+    position: absolute;
+    color: #ffffff;
+    font-size: 20px;
+	font-weight: bold;
+}
+.logged-in-as
+{
+    color: #ffffff;
+	font-weight: bold;
+    font-size: 20px;
+    align-items: center;
+    justify-content: center;
+	text-align: center;
+}
+
+.admin-page
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    gap: 100px;
+}
+.admin-panel
+{
+    padding: 20px;
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    max-height: 300px;
+    background: url("https://static.wikia.nocookie.net/iowiro/images/1/10/Wbg6.jpg");
+    text-shadow:
+        -2px -2px 10px black,
+         2px -2px 10px black,
+        -2px  2px 10px black,
+         2px  2px 10px black;
+}
+.admin-panel input
+{
+    padding: 10px;
+    gap: 10px;
+}
+.admin-panel button
+{
+    padding: 5px;
+}
+.admin-panel h2
+{
+    color: white;
+    font-weight: bold;
 }

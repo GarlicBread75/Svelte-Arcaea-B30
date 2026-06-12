@@ -1,7 +1,11 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\b30-calculator",
+    "\\b30-calculator\\src",
+    "\\b30-calculator\\src\\routes",
+    "\\b30-calculator\\src\\routes\\charts"
   ],
-  "SelectedNode": "\\users.db",
+  "SelectedNode": "\\b30-calculator\\src\\app.css",
   "PreviewInSolutionExplorer": false
 }

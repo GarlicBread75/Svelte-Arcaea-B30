@@ -37,13 +37,20 @@ def print_db(cursor):
     for row in cursor.fetchall():
         print(row)
 
+def reset_charts_db():
+    global charts_db
+
+    charts_db.execute('DROP TABLE charts')
+    create_charts_table()
+    csv_to_db()
 
 if __name__ == "__main__":
-    charts_db = sql.connect('charts_db')
+    charts_db = sql.connect('charts.db')
     users_db = sql.connect('users.db')
     
     create_charts_table()
-    create_users_table()
     csv_to_db()
+    create_users_table()
     
     charts_db.close()
+    users_db.close()

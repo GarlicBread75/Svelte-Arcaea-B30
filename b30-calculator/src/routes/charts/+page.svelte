@@ -4,6 +4,7 @@
 	import {onMount} from "svelte";
 	import {page} from '$app/state';
 	import {goto} from '$app/navigation';
+	import {user} from "$lib/auth";
 	
 	let table_data = $state([]);
 	let shown_rows = $state([]);
@@ -132,6 +133,13 @@
 	{
 		return [offset+1, offset+2].filter(p => p = total_pages).filter(p => p < total_pages);
 	}
+	
+	function logout()
+	{
+		event.preventDefault();
+	    user.set(null);
+	    goto('/charts');
+	}
 </script>
 
 {#if table_data.length == 0}
@@ -200,12 +208,13 @@
 					    <input bind:value = {row[col]}
 							   oninput = {(e) => {e.target.value = e.target.value.replace(/\D/g, '');}}
 							   onblur = {async () => {recalculate_rating(row);
-							                          await fetch("http://127.0.0.1:8000/update_score",
-													    {method: "POST",
-													    headers: {"Content-Type": "application/json"},
-													    body: JSON.stringify({id: row.Id, score: row.Score})});}}
+							                          await fetch("http://127.0.0.1:8000/update_score", {method: "POST",
+													                                                     headers: {"Content-Type": "application/json"},
+																										 body: JSON.stringify({id: row.Id, score: row.Score})});}}
 						/>
 					</td>
+				{:else if col == "Difficulty"}
+					<td>☆{row[col]}☆</td>
 				{:else}
 					<td>{row[col]}</td>
 				{/if}
@@ -214,6 +223,19 @@
 		{/each}
 	</tbody>
 </table>
+
+<div class = "left-bar">
+	{#if $user}
+		<p class = "logged-in-as">Logged in as: <br>{$user.username}</p>
+		<a href = "/charts" class = "doro-c charts-button" onclick={logout}>Log Out</a>
+		{#if $user?.role == "admin"}
+			<a href = "/admin_panel" class = "saya charts-button">Admin Panel</a>
+		{/if}
+	{:else}
+		<a href = "/signup" class = "eto charts-button">Sign Up</a>
+		<a href = "/login" class = "luna charts-button">Log In</a>
+	{/if}
+</div>
 
 <div class = "nav">
 	<div class="nav-left">

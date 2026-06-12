@@ -2,6 +2,13 @@
 
 <script>
 	import {onMount} from "svelte";
+	import {user} from "$lib/auth";
+	import {goto} from "$app/navigation";
+	
+	if (!$user)
+	{
+	    goto('/login');
+	}
 	
 	let table_data = $state([]);
 	let columns = $state([]);
@@ -65,6 +72,13 @@
 							}
 						 }
 						 });
+	
+	function logout()
+	{
+		event.preventDefault();
+	    user.set(null);
+	    goto('/charts');
+	}
 </script>
 
 {#if table_data.length == 0}
@@ -72,8 +86,21 @@
 {/if}
 
 <div class = "top-bar">
-	<a href = "/charts?page=1" class = "hikari charts-button">All Charts</a>
-	<a href = "/charts?page=1" class = "hikari charts-button">All Charts</a>
+	<a href = "/charts?page=0" class = "hikari charts-button">All Charts</a>
+	<a href = "/charts?page=0" class = "hikari charts-button">All Charts</a>
+</div>
+
+<div class = "left-bar">
+	{#if $user}
+		<p class = "logged-in-as">Logged in as: <br>{$user.username}</p>
+		<a href = "/charts" class = "doro-c charts-button" onclick={logout}>Log Out</a>
+		{#if $user?.role == "admin"}
+			<a href = "/admin_panel" class = "saya charts-button">Admin Panel</a>
+		{/if}
+	{:else}
+		<a href = "/signup" class = "eto charts-button">Sign Up</a>
+		<a href = "/login" class = "luna charts-button">Log In</a>
+	{/if}
 </div>
 
 {#if table_data.length > 0}
